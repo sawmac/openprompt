@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Teleprompter</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <article class="prompter">
+    <p>Hi, I’m Dave and welcome to JavaScript Basics. I’m really excited to be teaching this course. I love JavaScript -- it’s useful; it’s fun; and it’s available anywhere there’s a web browser. JavaScript is a great first language to learn and if you want to be a front end web developer, you need to learn it.</p>
+
+    <p>JavaScript started life as a simple little language intended to add a few interactive features to web pages. However, it’s grown into a powerful programming language that’s used on nearly every web site in the world. JavaScript drives the front end of giant web applications like Google Maps, GMail, and Facebook. It’s even capable of running on the backend as a super fast web server.</p>
+
+    <p>Before we jump into programming, let me take you through some of the places you can find JavaScript -- I’ll bet some of these will surprise you.</p>
+
+  </article>
+  <div class="flip"><span class="mirror">B</span></div>
+  <div class="speed">0</div>
+  <div class="arrow">➤</div>
+  <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script>
+    var scrolling = false;
+    var play = false;
+    var speed = 0;
+    var baseTime = 40;
+
+    function stop() {
+      speed = 0;
+      play = false;
+      updateSpeed()
+    }
+
+    function updateSpeed() {
+      $('.speed').text(speed);
+      if (speed > 0) {
+        $('.speed').addClass('running')
+      } else {
+        $('.speed').removeClass('running');
+      }
+    }
+
+
+    function pageScroll() { 
+      var direction;
+      if ( speed < 0 ) {
+        direction = -1;
+      } else if ( speed > 0 ) {
+        direction = 1;
+      }  
+      window.scrollBy(0, direction);
+      if ( $(document).scrollTop() === 0 ) {
+        stop();
+      }
+      if (play) {
+        scrolldelay = setTimeout('pageScroll()', baseTime / Math.abs(speed));
+      } 
+    }
+
+    function launchIntoFullscreen() {
+      var element = document.documentElement;
+      if(element.requestFullscreen) {
+        element.requestFullscreen();
+      } else if(element.mozRequestFullScreen) {
+        element.mozRequestFullScreen();
+      } else if(element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen();
+      } else if(element.msRequestFullscreen) {
+        element.msRequestFullscreen();
+      }
+    }
+
+    function exitFullscreen() {
+      if(document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if(document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      } else if(document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      }
+    }
+
+    $('body').on('keydown', function(e) {
+      e.preventDefault();
+      var key = e.keyCode || e.which;
+      console.log(key);
+      if (key === 32 || key === 17) {
+        if (! play) {
+          speed = 2;
+          play = true;
+          pageScroll();
+        } else {
+          speed = 0;
+          play = false;
+        }
+      } else if (key === 38) {
+        speed -= 1;
+      } else if (key === 40) {
+        speed += 1;
+      } else if (key === 37) {
+        $(window).scrollTop(0);
+        if (speed < 0) {
+          speed = 0;
+        }
+      } else if ( key === 39 ) {
+        $('html,body').scrollTop( $(document).height() );
+        stop();
+      }
+      updateSpeed();
+    });
+
+    $('.flip').click( function() {
+      $(this).add('.prompter, .arrow, .speed, .flip').toggleClass('mirror');
+    });
+    $('body').click(function() {
+      var fullscreenEnabled = document.fullscreenEnabled || document.mozFullScreenEnabled || document.webkitFullscreenEnabled;
+      if (! document.fullScreenEnabled) {
+        launchIntoFullscreen();
+      } else {
+        exitFullscreen();
+      }
+    });
+    /*$('#prompter').click(function () {
+      $this = $(this);
+      $this.prop('contentEditable',true);
+      $this.addClass('editable');
+    });*/
+  </script>
+</body>
+</html>
