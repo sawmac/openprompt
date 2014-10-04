@@ -1,13 +1,21 @@
+
+var $prompter = $('.prompter');
+var $arrow = $('.arrow');
+var $flipButton = $('.flip');
+var $editButton = $('.edit');
+var $toolbar = $('.toolbar');
+var $speedIndicator = $('.speed');
 var isPlaying = false;
 var isFlipped = false;
 var isBeingEdited = false;
-var baseFontSize = $('.prompter').css('font-size');
+var baseFontSize = $prompter.css('font-size');
 var editFontSize = 50;
 var speed = 0;
 var startSpeed = 4;
 var savedSpeed = 0;
 var baseTime = 40;
 var pageJump = 600;
+
 
 function stop() {
   savedSpeed = speed;
@@ -41,11 +49,11 @@ function updateSpeed() {
     speed = 20;
   }
 
-  $('.speed').text(speed);
+  $speedIndicator.text(speed);
   if (speed > 0) {
-    $('.speed').addClass('running')
+    $speedIndicator.addClass('running')
   } else {
-    $('.speed').removeClass('running');
+    $speedIndicator.removeClass('running');
   }
 }
 
@@ -147,8 +155,8 @@ $(document).on('keydown',null,'shift+0', function(e) {
 });
 
 // toggle page flip when clicking the flip button
-$('.flip').click( function(evt) {
-  $(this).add('.prompter, .toolbar, .edit').toggleClass('mirror');
+$flipButton.click( function(evt) {
+  $(this).add($prompter).add($toolbar).add($editButton).toggleClass('mirror');
   isFlipped = ! isFlipped;
   evt.stopPropagation();
 });
@@ -166,28 +174,28 @@ $('body').click(function() {
 /* make arrow draggable along the side
    thanks jQuery UI
 */
-$('.arrow').draggable({ axis: "y" });
+$arrow.draggable({ axis: "y" });
 
 // prompter properties 
 function setFontSize( amt ) {
-  $('.prompter').css('font-size', amt);
+  $prompter.css('font-size', amt);
 }
 
 // make page editable
-$('.edit').click(function (evt) {
+$editButton.click(function (evt) {
   stop();
   evt.stopPropagation();
   isBeingEdited = ! isBeingEdited;
   if (isBeingEdited) {
-    currentFontSize = $('.prompter').css('font-size');
+    currentFontSize = $prompter.css('font-size');
     isPlaying = false;
     setFontSize(50);
-    $('.prompter').prop('contentEditable',true).selectText();
+    $prompter.prop('contentEditable',true).selectText();
     $('body').addClass('editing');
     $(this).text('Done');
   } else {
     setFontSize(baseFontSize);
-    $('.prompter').prop('contentEditable',false);
+    $prompter.prop('contentEditable',false);
     $('body').removeClass('editing');
     $(this).text('Edit');
   }
