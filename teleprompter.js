@@ -13,10 +13,11 @@ var isBeingEdited = false;
 var baseFontSize = $prompter.css('font-size');
 var editFontSize = 50;
 var speed = 0;
-var startSpeed = 4;
+var startSpeed = 2;
 var savedSpeed = 0;
 var baseTime = 40;
 var pageJump = 600;
+var sensitivity = 1.5;
 
 
 function stop() {
@@ -68,14 +69,16 @@ function pageScroll() {
     direction = 1;
   }  
   window.scrollBy(0, direction);
-  if ( $(document).scrollTop() === 0 && speed <= 0) {
+  if ( $(document).scrollTop() === 0 && speed < 0) {
+    speed = 0;
     stop();
   }
   if ( $(window).scrollTop() + $(window).height() === $(document).height()  && speed >= 0) {
+    speed = 0;
     stop();
   };
   if (isPlaying) {
-    scrolldelay = setTimeout('pageScroll()', baseTime / Math.abs(speed/2));
+    scrolldelay = setTimeout('pageScroll()', baseTime / Math.abs(speed/sensitivity));
   } 
 }
 
