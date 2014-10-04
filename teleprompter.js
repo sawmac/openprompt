@@ -1,10 +1,12 @@
-
+// page elements
 var $prompter = $('.prompter');
 var $arrow = $('.arrow');
 var $flipButton = $('.flip');
 var $editButton = $('.edit');
 var $toolbar = $('.toolbar');
 var $speedIndicator = $('.speed');
+
+// teleprompter properties
 var isPlaying = false;
 var isFlipped = false;
 var isBeingEdited = false;
@@ -60,7 +62,6 @@ function updateSpeed() {
 
 function pageScroll() { 
   var direction;
-
   if ( speed < 0 ) {
     direction = -1;
   } else if ( speed > 0 ) {
@@ -73,7 +74,6 @@ function pageScroll() {
   if ( $(window).scrollTop() + $(window).height() === $(document).height()  && speed >= 0) {
     stop();
   };
-
   if (isPlaying) {
     scrolldelay = setTimeout('pageScroll()', baseTime / Math.abs(speed/2));
   } 
