@@ -115,7 +115,7 @@
     // excludes: button, checkbox, file, hidden, image, password, radio, reset, search, submit, url
     textAcceptingInputTypes: [
       "text", "password", "number", "email", "url", "range", "date", "month", "week", "time", "datetime",
-      "datetime-local", "search", "color", "tel", "article"],
+      "datetime-local", "search", "color", "tel"],
 
     options: {
       filterTextInputs: true
