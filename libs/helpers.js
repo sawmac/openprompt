@@ -21,6 +21,9 @@ jQuery.fn.selectText = function(){
 // fullscreen functions
 
 function launchFullscreen() {
+  if ( isFullScreen() ) {
+    return;
+  }
   var element = document.documentElement;
   if(element.requestFullscreen) {
     element.requestFullscreen();
@@ -34,6 +37,9 @@ function launchFullscreen() {
 }
 
 function exitFullscreen() {
+  if ( ! isFullScreen() ) {
+    return;
+  }
   if(document.exitFullscreen) {
     document.exitFullscreen();
   } else if(document.mozCancelFullScreen) {
@@ -43,13 +49,16 @@ function exitFullscreen() {
   }
 }
 
-function toggleFullScreen() {
-  if (
-    document.fullscreenElement ||
+function isFullScreen() {
+  var isFull = document.fullscreenElement ||
     document.webkitFullscreenElement ||
     document.mozFullScreenElement ||
-    document.msFullscreenElement
-    ) {
+    document.msFullscreenElement ;
+  return isFull;
+}
+
+function toggleFullScreen() {
+  if ( isFullScreen() ) {
       exitFullscreen();
   } else {
      launchFullscreen();
