@@ -2,12 +2,34 @@ html, body {
   background-color : black;
 }
 
+.editing {
+  background-color: #222;
+}
+
+.toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 110px;
+}
+
+.editing .toolbar {
+  display: none;
+}
+
 .prompter {
   color: white;
   font-size: 80px;
   font-family: Helvetica;
   margin-top: -.25em;
   padding: 2.25em 50px 0 110px;
+  margin-bottom: 7em;
+  -moz-transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 .prompter.mirror {
@@ -24,31 +46,52 @@ html, body {
   transform: scale(-1, 1) translateZ(0); 
 }
 
-.editable {
-  font-size: 50px;
+.editing .prompter {
+  padding: 10px;
 }
 
 .arrow {
   color: white;
   font-size: 100px;
-  position: fixed;
+  position: absolute;
   top: 2.4em;
+  cursor: pointer;
 }
 
-
-
-.speed, .flip {
+.speed, .flip, .edit {
   box-sizing: border-box;
   padding-top: 10px;
   width: 50px;
   height: 50px;
-  position: fixed;
+  position: absolute;
   text-align: center;
   color: white;
   font-size: 25px;
   font-family: Helvetica;
   font-weight: bold;
   opacity: .5;
+}
+
+.edit {
+  top: 0;
+  right: 0;
+  background-color: white;
+  color: black;
+  padding-left: 25px;
+  padding-right: 25px;
+  width: 100px;
+  position: fixed;
+  display : block;
+  cursor: pointer;
+}
+
+.playing .edit {
+  display: none;
+}
+
+.edit.mirror {
+  right: inherit;
+  left: 0;
 }
 
 .flip {
@@ -68,7 +111,7 @@ html, body {
   background-color: red;
 }
 
-.arrow.mirror, .speed.mirror, .flip.mirror {
+.toolbar.mirror {
   right: 0;
   left: inherit;
 }
