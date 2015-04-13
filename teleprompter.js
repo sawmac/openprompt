@@ -36,7 +36,7 @@ function play() {
     return;
   }
   if ( ! isPlaying ) {
-    launchFullscreen();
+    //launchFullscreen();
     speed = savedSpeed || startSpeed;
     isPlaying = true;
     $('body').addClass('playing');
@@ -170,7 +170,7 @@ $flipButton.click( function(evt) {
 */
 $('body').click(function() {
   if ( ! isBeingEdited && ! isPlaying) {
-    toggleFullScreen();
+   // toggleFullScreen();
   }
 });
 
